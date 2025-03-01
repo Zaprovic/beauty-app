@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ShoppingCart, Heart } from "lucide-react";
+import { Star, ShoppingCart, Heart, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { dummyProducts } from "@/data/dummy";
 import { ProductType } from "@/types";
@@ -29,8 +29,12 @@ export default async function ProductModal({
   if (!product) {
     return (
       <ModalWrapper>
-        <div className="py-8 text-center">
-          <p>Product not found</p>
+        <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
+          <AlertCircle className="h-16 w-16 text-rose-500" />
+          <p className="text-lg font-semibold">Product not found</p>
+          <p className="text-sm">
+            The product you are looking for does not exist or has been removed.
+          </p>
         </div>
       </ModalWrapper>
     );
@@ -58,9 +62,7 @@ export default async function ProductModal({
               {product.category}
             </p>
             <h2 className="text-2xl font-bold">{product.name}</h2>
-            <p className="text-2xl font-bold text-gray-900">
-              ${product.price.toFixed(2)}
-            </p>
+            <p className="text-2xl font-bold">${product.price.toFixed(2)}</p>
           </div>
 
           {/* Rating */}
@@ -90,7 +92,7 @@ export default async function ProductModal({
           </div>
 
           {/* Description */}
-          <p className="text-sm text-gray-600">{product.description}</p>
+          <p className="text-sm">{product.description}</p>
 
           {/* Stock Status */}
           <div className="flex items-center space-x-2">
