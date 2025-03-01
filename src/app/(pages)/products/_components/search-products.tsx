@@ -4,10 +4,10 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 
-interface SearchProducts {
+type SearchProducts = {
   onSearch: (query: string) => void;
   initialQuery?: string;
-}
+};
 
 export function SearchProducts({
   onSearch,

@@ -47,10 +47,10 @@ const categoryContent = {
   },
 };
 
-interface ProductsFilterContainerProps {
+type ProductsFilterContainerProps = {
   categories: ProductCategory[];
   initialProducts: ProductType[]; // Replace with your product type
-}
+};
 
 export function ProductsFilterContainer({
   categories,

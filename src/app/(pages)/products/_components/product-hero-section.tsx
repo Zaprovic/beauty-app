@@ -3,18 +3,18 @@
 import Image from "next/image";
 import { PackageSearch, Tag } from "lucide-react";
 
-interface CategoryContent {
+type CategoryContent = {
   title: string;
   description: string;
   image: string;
-}
+};
 
-interface ProductHeroSectionProps {
+type ProductHeroSectionProps = {
   categoryContent: CategoryContent;
   productCount: number;
   lowestPrice: string;
   category: string;
-}
+};
 
 export function ProductHeroSection({
   categoryContent,

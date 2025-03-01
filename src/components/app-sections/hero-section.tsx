@@ -5,9 +5,9 @@ import React from "react";
 const HeroSection = () => {
   return (
     <section className="relative mx-auto h-fit max-w-6xl border-b py-20 lg:py-0">
-      <div className="container mx-auto flex flex-col items-center justify-between gap-0 px-16 md:flex-row">
+      <div className="container mx-auto flex flex-col items-center justify-between gap-16 px-16 md:flex-row">
         <div className="z-10 pt-10 text-center lg:w-1/2 lg:pt-0 lg:text-left">
-          <h2 className="mb-4 text-4xl font-bold -tracking-wider lg:text-6xl">
+          <h2 className="mb-4 text-4xl font-bold -tracking-wider lg:text-5xl">
             Discover your natural beauty
           </h2>
           <p className="mb-8 text-lg lg:text-xl">

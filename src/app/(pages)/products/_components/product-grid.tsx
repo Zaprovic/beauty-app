@@ -4,9 +4,9 @@ import { PackageSearch } from "lucide-react";
 import Product from "@/components/product";
 import { ProductType } from "@/types";
 
-interface ProductGridProps {
+type ProductGridProps = {
   products: ProductType[]; // Replace with your product type
-}
+};
 
 export function ProductGrid({ products }: ProductGridProps) {
   if (products.length === 0) {

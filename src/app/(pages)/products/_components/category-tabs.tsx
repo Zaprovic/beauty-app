@@ -2,16 +2,16 @@
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export interface ProductCategory {
+export type ProductCategory = {
   id: string;
   label: string;
-}
+};
 
-interface CategoryTabsProps {
+type CategoryTabsProps = {
   categories: ProductCategory[];
   activeCategory: string;
   onCategoryChange: (category: string) => void;
-}
+};
 
 export function CategoryTabs({
   categories,
