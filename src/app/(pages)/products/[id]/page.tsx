@@ -15,13 +15,11 @@ const fetchProduct = async (): Promise<ProductType> => {
 export default async function ProductPage({
   params,
 }: {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }) {
   // Fetch the product data server-side
   let product: ProductType | null = null;
-  const { id } = params;
+  const { id } = await params;
   console.log(id);
 
   try {
