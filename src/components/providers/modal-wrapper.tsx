@@ -28,7 +28,7 @@ export default function ModalWrapper({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="h-fit max-w-full">
+      <DialogContent className="h-screen max-w-full sm:h-fit">
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-xl font-bold">
             Product Details
