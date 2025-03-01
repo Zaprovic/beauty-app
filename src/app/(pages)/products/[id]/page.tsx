@@ -5,8 +5,15 @@ import Link from "next/link";
 import ProductTabs from "./_components/product-tabs";
 import ProductImages from "./_components/product-images";
 import { dummyProducts } from "@/data/dummy";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
-// todo: replace with your actual product API call
+// todo: replace later when we have data store set up
 const fetchProduct = async (): Promise<ProductType> => {
   return dummyProducts[0];
 };
@@ -55,26 +62,37 @@ export default async function ProductPage({
   }
 
   return (
-    <div className="fade-in container mx-auto px-4 py-8 md:py-12">
+    <div className="fade-in container mx-auto max-w-7xl px-4 py-8 md:py-12">
       {/* Breadcrumbs */}
-      <div className="mb-6 flex items-center text-sm">
-        <Button asChild variant={"outline"}>
-          <Link href={"/"} className="hover:text-primary transition-colors">
-            Home
-          </Link>
-        </Button>
-        <span className="mx-2">/</span>
-        <Button asChild variant={"outline"}>
-          <Link
-            href={"/products"}
-            className="hover:text-primary transition-colors"
-          >
-            Products
-          </Link>
-        </Button>
-        <span className="mx-2">/</span>
-        <span className="font-medium">{product.name}</span>
-      </div>
+      <Breadcrumb>
+        <BreadcrumbList className="mb-6 flex items-center text-sm">
+          <BreadcrumbItem>
+            <Button asChild variant={"outline"}>
+              <BreadcrumbLink
+                href={"/"}
+                className="hover:text-primary transition-colors"
+              >
+                Home
+              </BreadcrumbLink>
+            </Button>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <Button asChild variant={"outline"}>
+              <BreadcrumbLink
+                href={"/products"}
+                className="hover:text-primary transition-colors"
+              >
+                Products
+              </BreadcrumbLink>
+            </Button>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem className="font-medium">
+            {product.name}
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       <div className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Product Images */}
