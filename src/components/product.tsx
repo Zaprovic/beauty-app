@@ -8,8 +8,8 @@ import { ProductType } from "@/types";
 
 const Product = ({ product }: { product: ProductType }) => {
   return (
-    <Card className="m-0 overflow-hidden p-0 transition-all hover:shadow-lg">
-      <div className="relative h-48 w-full overflow-hidden">
+    <Card className="m-0 h-96 overflow-hidden p-0 transition-all hover:shadow-lg">
+      <div className="relative h-full w-full overflow-hidden">
         <Image
           src={"/images/beauty-01.webp"}
           alt={product.name}

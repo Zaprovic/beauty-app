@@ -21,8 +21,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -36,7 +38,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="pt-17">{children}</main>
+          <main className="pt-17">
+            {children} {modal}
+          </main>
         </ThemeProvider>
       </body>
     </html>

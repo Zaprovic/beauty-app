@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { CategoryTabs, ProductCategory } from "./category-tabs";
 import { ProductGrid } from "./product-grid";
 import { ProductHeroSection } from "./product-hero-section";
@@ -49,7 +49,7 @@ const categoryContent = {
 
 type ProductsFilterContainerProps = {
   categories: ProductCategory[];
-  initialProducts: ProductType[]; // Replace with your product type
+  initialProducts: ProductType[];
 };
 
 export function ProductsFilterContainer({
@@ -58,9 +58,8 @@ export function ProductsFilterContainer({
 }: ProductsFilterContainerProps) {
   const [category, setCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredProducts, setFilteredProducts] = useState(initialProducts);
 
-  useEffect(() => {
+  const filteredProducts = useMemo(() => {
     let result = initialProducts;
 
     // Filter by category
@@ -77,7 +76,7 @@ export function ProductsFilterContainer({
       );
     }
 
-    setFilteredProducts(result);
+    return result;
   }, [category, searchQuery, initialProducts]);
 
   const currentCategoryContent =
@@ -98,19 +97,13 @@ export function ProductsFilterContainer({
         lowestPrice={lowestPrice}
         category={category}
       />
-
       <div className="container mx-auto max-w-7xl px-4 py-8">
-        {/* Search Bar */}
         <SearchProducts onSearch={setSearchQuery} />
-
-        {/* Category Tabs */}
         <CategoryTabs
           categories={categories}
           activeCategory={category}
           onCategoryChange={setCategory}
         />
-
-        {/* Product Grid */}
         <ProductGrid products={filteredProducts} />
       </div>
     </div>
