@@ -23,7 +23,7 @@ export function ProductHeroSection({
   category,
 }: ProductHeroSectionProps) {
   return (
-    <div className="from-primary/5 via-background to-primary/5 dark:from-primary/10 dark:via-background dark:to-primary/10 sticky top-0 z-10 overflow-hidden border-b bg-gradient-to-r backdrop-blur-sm">
+    <div className="from-primary/5 via-background to-primary/5 dark:from-primary/10 dark:via-background dark:to-primary/10 top-0 z-10 overflow-hidden border-b bg-gradient-to-r backdrop-blur-sm">
       <div className="bg-grid-pattern absolute inset-0 opacity-10"></div>
       <div className="relative container mx-auto max-w-7xl px-4 py-4 md:py-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
