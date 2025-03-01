@@ -57,7 +57,7 @@ export default async function ProductPage({
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 md:py-12">
+    <div className="fade-in container mx-auto px-4 py-8 md:py-12">
       {/* Breadcrumbs */}
       <div className="mb-6 flex items-center text-sm">
         <Button asChild variant={"outline"}>
