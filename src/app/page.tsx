@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <div className="fade-in mx-4 min-h-screen sm:mx-14">
       <HeroSection />
-      <CategoriesSection />
       <SellersSection />
+      <CategoriesSection />
 
       {/* Banner/Promotion */}
       <div className="border-b">
