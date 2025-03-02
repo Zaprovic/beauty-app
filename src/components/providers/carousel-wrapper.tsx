@@ -91,7 +91,7 @@ const CarouselWrapper = ({ delay, products }: props) => {
                   href={`/products/${product.id}`}
                   className="text-muted-foreground hover:text-primary flex w-full items-center gap-1 text-sm transition-colors"
                 >
-                  <span>View details</span>
+                  <span>Ver detalles</span>
                   <ExternalLinkIcon size={14} className="inline" />
                 </Link>
               </CardFooter>

@@ -21,28 +21,26 @@ function generateCategoryColor(
   text: string;
   accent: string;
 } {
-  // Hash the name to generate a predictable number
+  // Fixed hues for rosette colors
+  const hues = [0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330];
+  // Hash the name to generate a predictable index
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
-
-  // Use the hash to generate a hue (0-360)
-  const hue = hash % 360;
+  const hue = hues[Math.abs(hash) % hues.length];
 
   if (isDarkMode) {
-    // Dark mode palette - dimmed tones
     return {
-      bg: `hsl(${hue}, 50%, 15%)`, // Darker, dimmed background
-      text: `hsl(${hue}, 80%, 85%)`, // Dimmed text for dark backgrounds
-      accent: `hsl(${hue}, 80%, 45%)`, // Dimmed accent for dark mode
+      bg: `hsl(${hue}, 50%, 15%)`,
+      text: `hsl(${hue}, 80%, 85%)`,
+      accent: `hsl(${hue}, 80%, 45%)`,
     };
   } else {
-    // Light mode palette - dimmed tones
     return {
-      bg: `hsl(${hue}, 50%, 85%)`, // Light, dimmed background
-      text: `hsl(${hue}, 80%, 35%)`, // Dimmed text color
-      accent: `hsl(${hue}, 80%, 45%)`, // Dimmed accent
+      bg: `hsl(${hue}, 50%, 85%)`,
+      text: `hsl(${hue}, 80%, 35%)`,
+      accent: `hsl(${hue}, 80%, 45%)`,
     };
   }
 }
@@ -54,7 +52,6 @@ const CategoriesSection = () => {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // After mounting, we know we can access the theme
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -132,7 +129,6 @@ const CategoriesSection = () => {
                         className="relative h-64 overflow-hidden rounded-xl shadow-md transition-all duration-300 ease-in-out group-hover:scale-[1.02] hover:shadow-lg"
                         style={{ backgroundColor: colors.bg }}
                       >
-                        {/* Circle background for the letter */}
                         <div
                           className="absolute top-6 left-1/2 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full text-2xl font-bold transition-transform duration-300 group-hover:scale-110"
                           style={{
@@ -142,8 +138,6 @@ const CategoriesSection = () => {
                         >
                           {category.name.charAt(0).toUpperCase()}
                         </div>
-
-                        {/* Category name */}
                         <div className="absolute bottom-12 left-0 w-full text-center">
                           <h3
                             className="px-4 text-xl font-semibold transition-all duration-300 group-hover:translate-y-[-5px]"
@@ -152,8 +146,6 @@ const CategoriesSection = () => {
                             {category.name}
                           </h3>
                         </div>
-
-                        {/* Bottom badge */}
                         <div
                           className="group-hover:bg-opacity-95 absolute right-0 bottom-0 left-0 overflow-hidden rounded-b-xl py-3 text-center transition-all duration-300"
                           style={{
@@ -170,8 +162,6 @@ const CategoriesSection = () => {
                             Ver productos
                           </span>
                         </div>
-
-                        {/* Decorative elements */}
                         <div
                           className="absolute -top-6 -right-6 h-16 w-16 rounded-full opacity-30"
                           style={{ backgroundColor: colors.accent }}

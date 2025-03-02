@@ -7,6 +7,11 @@ import { Button } from "./ui/button";
 import { type ProductWithCategoryType } from "@/types";
 import { HeartIcon } from "lucide-react";
 
+// Function to round price to nearest hundred below
+const roundToHundredBelow = (price: number) => {
+  return Math.floor(price / 100) * 100;
+};
+
 const Product = async ({ product }: { product: ProductWithCategoryType }) => {
   return (
     <Card className="relative m-0 h-96 overflow-hidden p-0 transition-all hover:shadow-lg">
@@ -60,7 +65,9 @@ const Product = async ({ product }: { product: ProductWithCategoryType }) => {
                   style: "currency",
                   currency: "COP",
                 }).format(
-                  (1 - product.discountPercentage / 100) * product.price,
+                  roundToHundredBelow(
+                    (1 - product.discountPercentage / 100) * product.price,
+                  ),
                 )}
               </p>
               <p className="text-muted-foreground text-xs line-through">
@@ -80,7 +87,7 @@ const Product = async ({ product }: { product: ProductWithCategoryType }) => {
           )}
         </div>
         <Button asChild variant="outline" size="sm">
-          <Link href={`/products/${product.id}`}>View Details</Link>
+          <Link href={`/products/${product.id}`}>Ver detalles</Link>
         </Button>
       </CardFooter>
     </Card>

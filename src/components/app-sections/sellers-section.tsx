@@ -10,9 +10,9 @@ const SellersSection = async () => {
     <section className="mx-auto border-b py-16">
       <div className="px-4">
         <h2 className="mb-4 text-center text-3xl font-bold -tracking-wider">
-          Best Sellers
+          Más vendidos
         </h2>
-        <p className="mb-12 text-center">Our most loved products</p>
+        <p className="mb-12 text-center">Nuestros productos más populares</p>
 
         <CarouselWrapper products={products} delay={5000} />
 
@@ -21,7 +21,7 @@ const SellersSection = async () => {
             href="/products"
             className="border-primary hover:bg-primary hover:text-primary-foreground inline-block rounded-full border bg-white px-6 py-2 transition"
           >
-            View All Products
+            Ver todos los productos
           </Link>
         </div>
       </div>

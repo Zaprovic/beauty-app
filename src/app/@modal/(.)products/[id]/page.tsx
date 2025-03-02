@@ -14,6 +14,11 @@ import { Badge } from "@/components/ui/badge";
 import ModalWrapper from "@/components/providers/modal-wrapper";
 import { getProductWithCategory } from "@/lib/db";
 
+// Function to round price to nearest hundred below
+const roundToHundredBelow = (price: number) => {
+  return Math.floor(price / 100) * 100;
+};
+
 export default async function ProductModal({
   params,
 }: {
@@ -84,9 +89,12 @@ export default async function ProductModal({
                       style: "currency",
                       currency: "COP",
                     }).format(
-                      productWithCategory.price *
-                        (1 -
-                          (productWithCategory.discountPercentage ?? 0) / 100),
+                      roundToHundredBelow(
+                        productWithCategory.price *
+                          (1 -
+                            (productWithCategory.discountPercentage ?? 0) /
+                              100),
+                      ),
                     )}
                   </p>
                   <p className="text-sm text-gray-500 line-through">
