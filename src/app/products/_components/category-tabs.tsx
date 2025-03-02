@@ -7,13 +7,6 @@ import { CategoryType } from "@/types";
 import { unstable_cache } from "next/cache";
 import EmptyState from "./empty-state";
 
-// EmptyStateComponent for reuse
-
-export type ProductCategory = {
-  id: string;
-  name: string;
-};
-
 type CategoryTabsProps = {
   categories: CategoryType[];
   searchParams: { [key: string]: string | string[] | undefined };
