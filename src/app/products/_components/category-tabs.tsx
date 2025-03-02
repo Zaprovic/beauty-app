@@ -18,7 +18,7 @@ const getCachedProducts = unstable_cache(
     return await getProductsWithCategories();
   },
   ["products-with-categories"],
-  { revalidate: 60 }, // Cache for 60 seconds
+  { revalidate: 300 }, // Cache for 300 seconds (5 minutes)
 );
 
 export async function CategoryTabs({ searchParams }: CategoryTabsProps) {
