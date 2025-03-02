@@ -3,12 +3,16 @@ import BenefitsSection from "@/components/app-sections/benefits-section";
 import CategoriesSection from "@/components/app-sections/categories-section";
 import HeroSection from "@/components/app-sections/hero-section";
 import SellersSection from "@/components/app-sections/sellers-section";
+import CarouselSkeleton from "@/components/skeletons/carousel-skeleton";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
     <div className="fade-in mx-4 min-h-screen sm:mx-14">
       <HeroSection />
-      <SellersSection />
+      <Suspense fallback={<CarouselSkeleton />}>
+        <SellersSection />
+      </Suspense>
       <CategoriesSection />
 
       {/* Banner/Promotion */}
