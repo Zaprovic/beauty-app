@@ -1,10 +1,8 @@
-import { ShoppingCart, Heart, Star, ArrowLeft } from "lucide-react";
-import { ProductType } from "@/types";
+import { ShoppingCart, Heart, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import ProductTabs from "./_components/product-tabs";
 import ProductImages from "./_components/product-images";
-import { dummyProducts } from "@/data/dummy";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,11 +10,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
-// todo: replace later when we have data store set up
-const fetchProduct = async (): Promise<ProductType> => {
-  return dummyProducts[0];
-};
+import { getProductWithCategory } from "@/lib/db";
 
 // Convert to a server component by removing "use client"
 export default async function ProductPage({
@@ -25,15 +19,8 @@ export default async function ProductPage({
   params: Promise<{ id: string }>;
 }) {
   // Fetch the product data server-side
-  let product: ProductType | null = null;
   const { id } = await params;
-  console.log(id);
-
-  try {
-    product = await fetchProduct();
-  } catch (error) {
-    console.error("Error fetching product:", error);
-  }
+  const product = await getProductWithCategory(id);
 
   if (!product) {
     return (
@@ -102,46 +89,21 @@ export default async function ProductPage({
         <div className="space-y-6">
           <div>
             <p className="text-primary text-sm font-medium tracking-wider uppercase">
-              {product.category}
+              {product.categoryName}
             </p>
-            <h1 className="mt-1 text-3xl font-bold md:text-4xl">
+            <h1 className="mt-1 text-3xl font-bold -tracking-wider text-balance md:text-4xl">
               {product.name}
             </h1>
 
-            <div className="mt-3 flex items-center">
-              <div className="flex items-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    size={16}
-                    fill={
-                      i < Math.floor(product.rating ?? 0) ? "#F59E0B" : "none"
-                    }
-                    stroke={
-                      i < Math.floor(product.rating ?? 0)
-                        ? "#F59E0B"
-                        : "#D1D5DB"
-                    }
-                    className={
-                      i < Math.floor(product.rating ?? 0)
-                        ? "text-amber-500"
-                        : "text-gray-300"
-                    }
-                  />
-                ))}
-              </div>
-              <p className="ml-2 text-sm">
-                {product.rating} ({product.reviewCount} reviews)
-              </p>
-            </div>
-
             <p className="mt-4 text-2xl font-bold md:text-3xl">
-              ${product.price.toFixed(2)}
+              ${new Intl.NumberFormat("es-CO").format(product.price)}
             </p>
           </div>
 
           <div className="border-t pt-4">
-            <p className="leading-relaxed">{product.description}</p>
+            <p className="leading-relaxed -tracking-wider text-pretty">
+              {product.description}
+            </p>
           </div>
 
           <div className="flex items-center space-x-2 pt-4">

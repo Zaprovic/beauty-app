@@ -31,7 +31,7 @@ export default function ModalWrapper({
       <DialogContent className="h-screen max-w-full sm:h-fit">
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="text-xl font-bold">
-            Product Details
+            Detalles del producto
           </DialogTitle>
         </DialogHeader>
         {children}

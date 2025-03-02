@@ -1,21 +1,16 @@
-import { dummyProducts } from "@/data/dummy";
+import { db } from "@/db";
 import { ProductsFilterContainer } from "./_components/product-filter-container";
+import { categories as categoriesTable } from "@/db/schema";
+import { getProductsWithCategories } from "@/lib/db";
 
-const productCategories = [
-  { id: "all", label: "All Products" },
-  { id: "skincare", label: "Skincare" },
-  { id: "makeup", label: "Makeup" },
-  { id: "haircare", label: "Haircare" },
-  { id: "bodycare", label: "Body Care" },
-  { id: "fragrances", label: "Fragrances" },
-];
-
-export default function ProductsPage() {
-  const products = dummyProducts;
+export default async function ProductsPage() {
+  // const products = dummyProducts;
+  const products = await getProductsWithCategories();
+  const categories = await db.select().from(categoriesTable);
 
   return (
     <ProductsFilterContainer
-      categories={productCategories}
+      categories={categories}
       initialProducts={products}
     />
   );

@@ -5,7 +5,9 @@ import Product from "@/components/product";
 import { ProductType } from "@/types";
 
 type ProductGridProps = {
-  products: ProductType[]; // Replace with your product type
+  products: (ProductType & {
+    categoryName: string;
+  })[];
 };
 
 export function ProductGrid({ products }: ProductGridProps) {
