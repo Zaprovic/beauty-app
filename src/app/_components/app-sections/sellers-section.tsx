@@ -11,9 +11,12 @@ const SellersSection = async () => {
     <section className="mx-auto border-b py-16">
       <div className="px-4">
         <h2 className="mb-4 text-center text-3xl font-bold -tracking-wider">
-          Más vendidos
+          Nuestros productos
         </h2>
-        <p className="mb-12 text-center">Nuestros productos más populares</p>
+        <p className="mb-12 text-center">
+          Descubre los productos de nuestra colección y encuentra lo que más te
+          gusta.
+        </p>
 
         <CarouselWrapper delay={5000}>
           <CarouselContent className="fade-in -ml-4">
@@ -31,7 +34,7 @@ const SellersSection = async () => {
         <div className="mt-10 text-center">
           <Link
             href="/products"
-            className="border-primary hover:bg-primary hover:text-primary-foreground inline-block rounded-full border bg-white px-6 py-2 transition"
+            className="border-primary hover:bg-primary hover:text-primary-foreground inline-block rounded-full border px-6 py-2 transition"
           >
             Ver todos los productos
           </Link>
