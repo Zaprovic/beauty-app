@@ -16,7 +16,7 @@ const CategoriesSection = () => {
     <section className="mx-auto border-b py-16">
       <div className="px-4">
         <h2 className="mb-12 text-center text-3xl font-bold -tracking-wider">
-          Shop By Category
+          Comprar por Categoría
         </h2>
         <Carousel
           plugins={[
@@ -40,12 +40,11 @@ const CategoriesSection = () => {
                 className="md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
               >
                 <Link
-                  href={`/category/${category.toLowerCase()}`}
+                  href={`/category/${category.toLowerCase().replace(/ /g, "-")}`}
                   className="group"
                 >
                   <div className="relative h-64 overflow-hidden rounded-lg">
                     <div className="absolute inset-0">
-                      {/* Replace with actual category images */}
                       <Image
                         src={`/images/${category.toLocaleLowerCase()}.jpg`}
                         className="object-cover"
@@ -53,7 +52,7 @@ const CategoriesSection = () => {
                         fill
                       />
                       <div className="flex h-full w-full items-center justify-center">
-                        Image: {category}
+                        Imagen: {category}
                       </div>
                     </div>
                     <div className="bg-opacity-20 group-hover:bg-opacity-30 absolute inset-0 flex items-end transition">

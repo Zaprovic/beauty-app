@@ -13,8 +13,6 @@ import { Button } from "@/components/ui/button";
 import ModalWrapper from "@/components/providers/modal-wrapper";
 import { getProductWithCategory } from "@/lib/db";
 
-// Componente de servidor para obtener datos del producto
-
 export default async function ProductModal({
   params,
 }: {
