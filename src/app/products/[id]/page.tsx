@@ -10,7 +10,15 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { getProductWithCategory } from "@/lib/db";
+import { getProductsWithCategories, getProductWithCategory } from "@/lib/db";
+
+export async function generateStaticParams() {
+  const products = await getProductsWithCategories();
+
+  return products.map((p) => ({
+    id: p.id.toString(),
+  }));
+}
 
 // Function to round price to nearest hundred below
 const roundToHundredBelow = (price: number) => {
