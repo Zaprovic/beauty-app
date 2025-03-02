@@ -88,16 +88,43 @@ export default async function ProductPage({
         {/* Product Info */}
         <div className="space-y-6">
           <div>
-            <p className="text-primary text-sm font-medium tracking-wider uppercase">
-              {product.categoryName}
-            </p>
+            {/* Display all categories as badges */}
+            <div className="mb-3 flex flex-wrap gap-2">
+              {product.categories.map((category) => (
+                <span
+                  key={category.id}
+                  className="text-primary bg-primary/10 inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium"
+                >
+                  {category.name}
+                </span>
+              ))}
+            </div>
+
             <h1 className="mt-1 text-3xl font-bold -tracking-wider text-balance md:text-4xl">
               {product.name}
             </h1>
 
-            <p className="mt-4 text-2xl font-bold md:text-3xl">
-              ${new Intl.NumberFormat("es-CO").format(product.price)}
-            </p>
+            {/* Display both original and discounted price if there's a discount */}
+            {product.discountPercentage && product.discountPercentage > 0 ? (
+              <div className="mt-4 flex items-center gap-2">
+                <p className="text-primary text-2xl font-bold md:text-3xl">
+                  $
+                  {new Intl.NumberFormat("es-CO").format(
+                    product.price * (1 - product.discountPercentage / 100),
+                  )}
+                </p>
+                <p className="text-lg text-gray-500 line-through">
+                  ${new Intl.NumberFormat("es-CO").format(product.price)}
+                </p>
+                <span className="ml-2 rounded bg-rose-500 px-2 py-1 text-xs font-bold text-white">
+                  {product.discountPercentage}% OFF
+                </span>
+              </div>
+            ) : (
+              <p className="mt-4 text-2xl font-bold md:text-3xl">
+                ${new Intl.NumberFormat("es-CO").format(product.price)}
+              </p>
+            )}
           </div>
 
           <div className="border-t pt-4">

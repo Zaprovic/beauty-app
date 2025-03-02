@@ -10,6 +10,7 @@ import {
   RefreshCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import ModalWrapper from "@/components/providers/modal-wrapper";
 import { getProductWithCategory } from "@/lib/db";
 
@@ -38,15 +39,16 @@ export default async function ProductModal({
   return (
     <ModalWrapper>
       <div className="flex flex-col gap-6">
-        {/* SECCIÓN 1: Imagen del Producto, Categoría, Nombre y Precio */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* Imagen del Producto */}
           <div className="relative aspect-square overflow-hidden rounded-lg shadow-md">
-            <div className="absolute top-3 left-3 z-10">
-              <span className="bg-primary/90 rounded-full px-3 py-1 text-xs font-medium text-white">
-                Nuevo
-              </span>
-            </div>
+            {productWithCategory.discountPercentage != null &&
+              productWithCategory.discountPercentage > 0 && (
+                <div className="absolute top-2 left-2 z-10">
+                  <Badge className="bg-rose-500 font-medium text-white">
+                    {productWithCategory.discountPercentage}% OFF
+                  </Badge>
+                </div>
+              )}
             <Image
               src={productWithCategory.mainImage ?? "/images/beauty-01.webp"}
               alt={productWithCategory.name}
@@ -57,29 +59,53 @@ export default async function ProductModal({
             />
           </div>
 
-          {/* Categoría, Nombre, Precio */}
           <div className="flex flex-col justify-center space-y-4">
-            <div className="flex items-center justify-between">
-              <p className="text-primary text-sm font-medium tracking-wider uppercase">
-                {productWithCategory.categoryName}
-              </p>
+            <div className="flex flex-wrap items-center gap-2">
+              {productWithCategory.categories.map((category) => (
+                <Badge
+                  key={category.id}
+                  className="bg-primary/10 text-primary text-xs"
+                >
+                  {category.name}
+                </Badge>
+              ))}
             </div>
 
-            {/* Nombre y Precio */}
             <div>
               <h2 className="line-clamp-3 text-2xl font-bold -tracking-wider text-balance">
                 {productWithCategory.name}
               </h2>
 
-              <p className="text-primary mt-2 text-2xl font-bold -tracking-wider">
-                {new Intl.NumberFormat("es-CO", {
-                  style: "currency",
-                  currency: "COP",
-                }).format(productWithCategory.price)}
-              </p>
+              {productWithCategory.discountPercentage &&
+              productWithCategory.discountPercentage > 0 ? (
+                <div className="mt-2 flex items-center gap-2">
+                  <p className="text-primary text-2xl font-bold -tracking-wider">
+                    {new Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                    }).format(
+                      productWithCategory.price *
+                        (1 -
+                          (productWithCategory.discountPercentage ?? 0) / 100),
+                    )}
+                  </p>
+                  <p className="text-sm text-gray-500 line-through">
+                    {new Intl.NumberFormat("es-CO", {
+                      style: "currency",
+                      currency: "COP",
+                    }).format(productWithCategory.price)}
+                  </p>
+                </div>
+              ) : (
+                <p className="text-primary mt-2 text-2xl font-bold -tracking-wider">
+                  {new Intl.NumberFormat("es-CO", {
+                    style: "currency",
+                    currency: "COP",
+                  }).format(productWithCategory.price)}
+                </p>
+              )}
             </div>
 
-            {/* Estado de Stock y Entrega Estimada */}
             <div className="space-y-2">
               <div className="flex items-center space-x-2 rounded-md p-3">
                 <div

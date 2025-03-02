@@ -1,17 +1,29 @@
 import { db } from "@/db";
-import { ProductsFilterContainer } from "./_components/product-filter-container";
 import { categories as categoriesTable } from "@/db/schema";
-import { getProductsWithCategories } from "@/lib/db";
+import { CategoryTabs } from "./_components/category-tabs";
+import { Suspense } from "react";
+import { SearchProducts } from "./_components/search-products";
+import { LoaderIcon } from "lucide-react";
 
 export default async function ProductsPage() {
-  // const products = dummyProducts;
-  const products = await getProductsWithCategories();
   const categories = await db.select().from(categoriesTable);
 
   return (
-    <ProductsFilterContainer
-      categories={categories}
-      initialProducts={products}
-    />
+    <>
+      <div className="fade-in mx-auto max-w-5xl">
+        <div className="container mx-auto max-w-7xl px-4 py-8">
+          <SearchProducts />
+          <Suspense
+            fallback={
+              <div className="flex flex-col items-center text-center">
+                <LoaderIcon className="h-10 w-10 animate-spin" />
+              </div>
+            }
+          >
+            <CategoryTabs categories={categories} />
+          </Suspense>
+        </div>
+      </div>
+    </>
   );
 }
