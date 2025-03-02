@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[80vh] flex-col items-center justify-center px-4 text-center">
+    <div className="fade-in flex min-h-[80vh] flex-col items-center justify-center px-4 text-center">
       <div className="max-w-md space-y-6">
         <div className="flex flex-col items-center justify-center gap-0">
           <div className="flex justify-center">

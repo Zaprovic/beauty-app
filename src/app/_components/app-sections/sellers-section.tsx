@@ -1,10 +1,11 @@
 import Link from "next/link";
-import CarouselWrapper from "../providers/carousel-wrapper";
-import { db } from "@/db";
-import { products as productsTable } from "@/db/schema";
+import CarouselWrapper from "@/components/providers/carousel-wrapper";
+import { CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Product from "@/components/product";
+import { getProductsWithCategories } from "@/lib/db";
 
 const SellersSection = async () => {
-  const products = await db.select().from(productsTable);
+  const products = await getProductsWithCategories();
 
   return (
     <section className="mx-auto border-b py-16">
@@ -14,7 +15,18 @@ const SellersSection = async () => {
         </h2>
         <p className="mb-12 text-center">Nuestros productos más populares</p>
 
-        <CarouselWrapper products={products} delay={5000} />
+        <CarouselWrapper delay={5000}>
+          <CarouselContent className="fade-in -ml-4">
+            {products.map((product) => (
+              <CarouselItem
+                key={product.id}
+                className="pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+              >
+                <Product product={product} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </CarouselWrapper>
 
         <div className="mt-10 text-center">
           <Link
