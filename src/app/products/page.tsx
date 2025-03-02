@@ -6,14 +6,18 @@ import { Suspense } from "react";
 import { LoaderIcon } from "lucide-react";
 import { SearchProducts } from "./_components/search-products";
 
-export default async function ProductsPage() {
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const categories = await db.select().from(categoriesTable);
+  const params = await searchParams;
 
   return (
     <div>
       <SearchProducts />
       <div className="container mx-auto my-17 max-w-7xl px-4 py-8">
-        {/* <SearchProducts /> */}
         <Suspense
           fallback={
             <div className="flex flex-col items-center text-center">
@@ -21,7 +25,7 @@ export default async function ProductsPage() {
             </div>
           }
         >
-          <CategoryTabs categories={categories} />
+          <CategoryTabs searchParams={params} categories={categories} />
         </Suspense>
       </div>
     </div>

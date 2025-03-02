@@ -1,11 +1,51 @@
 import Product from "@/components/product";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Skeleton } from "@/components/ui/skeleton"; // Import the Skeleton component
 import { db } from "@/db";
 import { categories as categoriesTable } from "@/db/schema";
 import { getProductsWithCategories } from "@/lib/db";
 import { CategoryType } from "@/types";
-import { Suspense } from "react";
+import { unstable_cache } from "next/cache";
+import { SearchX, ShoppingBag, ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+
+// EmptyStateComponent for reuse
+function EmptyState({
+  message,
+  categoryName = null,
+}: {
+  message: string;
+  categoryName?: string | null;
+}) {
+  return (
+    <div className="col-span-full flex flex-col items-center justify-center gap-4 py-16 text-center">
+      <div className="bg-muted rounded-full p-6">
+        <SearchX className="text-muted-foreground h-10 w-10" />
+      </div>
+      <h3 className="text-2xl font-semibold tracking-tight">
+        No se encontraron productos
+      </h3>
+      <p className="text-muted-foreground max-w-md">
+        {message}
+        {categoryName && <span className="font-medium"> {categoryName}</span>}
+      </p>
+      <div className="mt-4 flex gap-4">
+        <Button asChild variant="outline" size="lg" className="gap-2">
+          <Link href="/products">
+            <ArrowLeft className="h-4 w-4" />
+            Ver todos los productos
+          </Link>
+        </Button>
+        <Button asChild size="lg" className="gap-2">
+          <Link href="/categories">
+            <ShoppingBag className="h-4 w-4" />
+            Explorar categorías
+          </Link>
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 export type ProductCategory = {
   id: string;
@@ -14,75 +54,122 @@ export type ProductCategory = {
 
 type CategoryTabsProps = {
   categories: CategoryType[];
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function CategoryTabs({}: CategoryTabsProps) {
-  const categories = await db.select().from(categoriesTable);
+// Cache product data fetching to improve performance
+const getCachedProducts = unstable_cache(
+  async () => {
+    return await getProductsWithCategories();
+  },
+  ["products-with-categories"],
+  { revalidate: 60 }, // Cache for 60 seconds
+);
 
-  const productsWithCategories = await getProductsWithCategories();
+export async function CategoryTabs({ searchParams }: CategoryTabsProps) {
+  const categories = await db.select().from(categoriesTable);
+  const searchQuery = Array.isArray(searchParams.q)
+    ? searchParams.q[0]
+    : searchParams.q || "";
+
+  // Use cached products data
+  const productsWithCategories = await getCachedProducts();
+
+  // Optimize filtering by using a more efficient algorithm
+  const filteredProducts = searchQuery
+    ? productsWithCategories.filter((product) => {
+        const query = searchQuery.toLowerCase();
+        return (
+          product.name.toLowerCase().includes(query) ||
+          product.description?.toLowerCase().includes(query) ||
+          product.categories.some((cat) =>
+            cat.name.toLowerCase().includes(query),
+          )
+        );
+      })
+    : productsWithCategories;
+
+  // Find count of products per category for showing numbers
+  const productCountByCategory = categories.reduce(
+    (acc, category) => {
+      acc[category.id] = filteredProducts.filter((product) =>
+        product.categories.some((cat) => cat.id === category.id),
+      ).length;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
   return (
     <Tabs defaultValue={"Todos"} className="mb-8">
       <TabsList className="flex h-auto w-full flex-wrap justify-center gap-2 p-2">
-        {[
-          {
-            id: 99999,
-            name: "Todos",
-          },
-          ...categories,
-        ].map((cat) => (
+        <TabsTrigger
+          key="all"
+          value="Todos"
+          className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex-grow text-center"
+        >
+          Todos ({filteredProducts.length})
+        </TabsTrigger>
+        {categories.map((cat) => (
           <TabsTrigger
             key={cat.id}
             value={cat.name}
             className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground flex-grow text-center"
           >
-            {cat.name}
+            {cat.name} ({productCountByCategory[cat.id] || 0})
           </TabsTrigger>
         ))}
       </TabsList>
 
-      <Suspense
-        fallback={
-          <TabsContent
-            value="Todos"
-            className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6"
-          >
-            {productsWithCategories.map((_, index) => (
-              <Skeleton
-                key={index}
-                className="relative m-0 mt-4 h-96 overflow-hidden p-0 transition-all hover:shadow-lg"
-              />
-            ))}
-          </TabsContent>
-        }
+      {/* "Todos" tab showing all products */}
+      <TabsContent
+        value="Todos"
+        className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6"
       >
-        {/* "Todos" tab showing all products */}
-        <TabsContent
-          value="Todos"
-          className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6"
-        >
-          {productsWithCategories.map((product) => (
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
             <Product key={product.id} product={product} />
-          ))}
-        </TabsContent>
+          ))
+        ) : (
+          <EmptyState
+            message={
+              searchQuery
+                ? `No pudimos encontrar productos que coincidan con "${searchQuery}". Por favor intente con otra búsqueda o explore nuestras categorías.`
+                : "No hay productos disponibles en este momento. Por favor revise más tarde."
+            }
+          />
+        )}
+      </TabsContent>
 
-        {/* Individual category tabs */}
-        {categories.map((category) => (
+      {/* Individual category tabs */}
+      {categories.map((category) => {
+        const categoryProducts = filteredProducts.filter((product) =>
+          product.categories.some((cat) => cat.id === category.id),
+        );
+
+        return (
           <TabsContent
             key={category.id}
             value={category.name}
             className="mt-4 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6"
           >
-            {productsWithCategories
-              .filter((product) =>
-                product.categories.some((cat) => cat.id === category.id),
-              )
-              .map((product) => (
+            {categoryProducts.length > 0 ? (
+              categoryProducts.map((product) => (
                 <Product key={product.id} product={product} />
-              ))}
+              ))
+            ) : (
+              <EmptyState
+                message={
+                  searchQuery
+                    ? `No pudimos encontrar productos que coincidan con "${searchQuery}" en la categoría`
+                    : "No hay productos disponibles en esta categoría en este momento. Por favor explore otras categorías."
+                }
+                categoryName={category.name}
+              />
+            )}
           </TabsContent>
-        ))}
-      </Suspense>
+        );
+      })}
     </Tabs>
   );
 }
