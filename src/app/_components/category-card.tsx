@@ -54,10 +54,7 @@ export const CategoryCard = ({ category, colorIndex }: CategoryCardProps) => {
   if (!mounted) {
     // Return a minimal version during SSR/before hydration
     return (
-      <Link
-        href={`/category/${category.name.toLocaleLowerCase()}`}
-        className="group"
-      >
+      <Link href={`/categories/${category.id}`} className="group">
         <div className="relative h-64 overflow-hidden rounded-xl shadow-md">
           <div className="absolute top-6 left-1/2 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full text-2xl font-bold">
             {category.name.charAt(0).toUpperCase()}
@@ -78,10 +75,7 @@ export const CategoryCard = ({ category, colorIndex }: CategoryCardProps) => {
   const colorSet = palette[colorIndex % palette.length];
 
   return (
-    <Link
-      href={`/category/${category.name.toLocaleLowerCase().replace(/\//g, "-")}`}
-      className="group"
-    >
+    <Link href={`/categories/${category.id}`} className="group">
       <div
         className={`relative h-64 overflow-hidden rounded-xl shadow-md transition-all duration-300 ease-in-out group-hover:scale-[1.02] hover:shadow-lg ${colorSet.bg} bg-opacity-50`}
       >
