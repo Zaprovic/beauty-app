@@ -6,13 +6,14 @@ import { Suspense } from "react";
 import { LoaderIcon } from "lucide-react";
 import { SearchProducts } from "./_components/search-products";
 
-export default async function ProductsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export default async function ProductsPage() {
+// {
+//   // searchParams,
+// }: {
+//   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+// },
   const categories = await db.select().from(categoriesTable);
-  const params = await searchParams;
+  // const params = await searchParams;
 
   return (
     <div>
@@ -25,7 +26,7 @@ export default async function ProductsPage({
             </div>
           }
         >
-          <CategoryTabs searchParams={params} categories={categories} />
+          <CategoryTabs categories={categories} />
         </Suspense>
       </div>
     </div>

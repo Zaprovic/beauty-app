@@ -11,7 +11,7 @@ type Props = {
 const CategorySidebar = ({
   currentCategoryId,
   relatedCategories,
-  popularFilters,
+  // popularFilters,
 }: Props) => {
   return (
     <div className="hidden w-64 space-y-8 lg:block">
@@ -39,7 +39,7 @@ const CategorySidebar = ({
       </div>
 
       {/* Price Range Filter */}
-      <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+      {/* <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
         <h3 className="mb-4 text-lg font-semibold text-gray-800">
           Price Range
         </h3>
@@ -80,10 +80,10 @@ const CategorySidebar = ({
             <span className="text-sm text-gray-700">$200+</span>
           </label>
         </div>
-      </div>
+      </div> */}
 
       {/* Popular Filters */}
-      <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+      {/* <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
         <h3 className="mb-4 text-lg font-semibold text-gray-800">
           Popular Filters
         </h3>
@@ -97,10 +97,10 @@ const CategorySidebar = ({
             </button>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Product Features */}
-      <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+      {/* <div className="rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
         <h3 className="mb-4 text-lg font-semibold text-gray-800">Features</h3>
         <div className="space-y-2">
           <label className="flex items-center space-x-2">
@@ -139,10 +139,10 @@ const CategorySidebar = ({
             <span className="text-sm text-gray-700">Hypoallergenic</span>
           </label>
         </div>
-      </div>
+      </div> */}
 
       {/* Shopping Guide */}
-      <div className="rounded-xl border border-rose-100 bg-rose-50 p-5">
+      {/* <div className="rounded-xl border border-rose-100 bg-rose-50 p-5">
         <h3 className="mb-2 text-lg font-semibold text-gray-800">
           Shopping Guide
         </h3>
@@ -170,7 +170,7 @@ const CategorySidebar = ({
             />
           </svg>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -47,8 +47,12 @@ async function getRelatedCategories(categoryId: number) {
   }
 }
 
-const SingleCategoryPage = async ({ params }: { params: { id: string } }) => {
-  const id = params.id;
+const SingleCategoryPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
 
   // Fetch category info
   const categoryInfo = await getCategoryName(id);
@@ -179,11 +183,11 @@ const SingleCategoryPage = async ({ params }: { params: { id: string } }) => {
         {/* Products section with sidebars */}
         <div className="flex flex-wrap gap-8 lg:flex-nowrap">
           {/* Left sidebar */}
-          {/* <CategorySidebar
+          <CategorySidebar
             currentCategoryId={Number(id)}
             relatedCategories={relatedCategories}
             popularFilters={popularFilters}
-          /> */}
+          />
 
           {/* Product Grid - center main content */}
           <div className="flex-1">
