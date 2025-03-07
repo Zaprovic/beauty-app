@@ -12,7 +12,7 @@ const roundToHundredBelow = (price: number) => {
   return Math.floor(price / 100) * 100;
 };
 
-const Product = async ({ product }: { product: ProductWithCategoryType }) => {
+const Product = ({ product }: { product: ProductWithCategoryType }) => {
   const outOfStock = product.inStock === false;
 
   return (

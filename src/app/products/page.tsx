@@ -2,18 +2,13 @@ import { db } from "@/db";
 import { categories as categoriesTable } from "@/db/schema";
 import { CategoryTabs } from "./_components/category-tabs";
 import { Suspense } from "react";
-// import { SearchProducts } from "./_components/search-products";
 import { LoaderIcon } from "lucide-react";
 import { SearchProducts } from "./_components/search-products";
+import { getProductsWithCategories } from "@/lib/db";
 
 export default async function ProductsPage() {
-  // {
-  //   // searchParams,
-  // }: {
-  //   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-  // },
   const categories = await db.select().from(categoriesTable);
-  // const params = await searchParams;
+  const productsWithCategories = await getProductsWithCategories();
 
   return (
     <div>
@@ -26,7 +21,10 @@ export default async function ProductsPage() {
             </div>
           }
         >
-          <CategoryTabs categories={categories} />
+          <CategoryTabs
+            categories={categories}
+            productsWithCategories={productsWithCategories}
+          />
         </Suspense>
       </div>
     </div>
