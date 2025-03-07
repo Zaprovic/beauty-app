@@ -5,17 +5,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { type ProductWithCategoryType } from "@/types";
-import { HeartIcon } from "lucide-react";
+import { HeartIcon, AlertCircle } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-// Function to round price to nearest hundred below
 const roundToHundredBelow = (price: number) => {
   return Math.floor(price / 100) * 100;
 };
 
 const Product = async ({ product }: { product: ProductWithCategoryType }) => {
+  const outOfStock = product.inStock === false;
+
   return (
-    <Card className="relative m-0 h-96 overflow-hidden p-0 transition-all hover:shadow-lg">
-      {/* Discount Badge */}
+    <Card
+      className={cn("relative m-0 h-96 overflow-hidden p-0 transition-all", {
+        "opacity-80": outOfStock,
+        "hover:shadow-lg": !outOfStock,
+      })}
+    >
       {product.discountPercentage != null && product.discountPercentage > 0 && (
         <div className="absolute top-2 left-2 z-10">
           <Badge className="bg-rose-500 font-medium text-white">
@@ -24,7 +30,14 @@ const Product = async ({ product }: { product: ProductWithCategoryType }) => {
         </div>
       )}
 
-      {/* Heart Icon */}
+      {outOfStock && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-black/50">
+          <Badge className="bg-gray-800 px-4 py-2 text-lg font-bold text-white">
+            Agotado
+          </Badge>
+        </div>
+      )}
+
       <div className="absolute top-2 right-2 z-10">
         <Button
           variant="secondary"
@@ -40,7 +53,9 @@ const Product = async ({ product }: { product: ProductWithCategoryType }) => {
           src={product.mainImage}
           alt={product.name}
           fill
-          className="object-contain"
+          className={cn("object-contain", {
+            grayscale: outOfStock,
+          })}
         />
       </div>
 
@@ -86,9 +101,21 @@ const Product = async ({ product }: { product: ProductWithCategoryType }) => {
             </p>
           )}
         </div>
-        <Button asChild variant="outline" size="sm">
-          <Link href={`/products/${product.id}`}>Ver detalles</Link>
-        </Button>
+        {outOfStock ? (
+          <Button
+            variant="outline"
+            size="sm"
+            disabled
+            className="cursor-not-allowed opacity-70"
+          >
+            <AlertCircle className="mr-1 h-4 w-4" />
+            Agotado
+          </Button>
+        ) : (
+          <Button asChild variant="outline" size="sm">
+            <Link href={`/products/${product.id}`}>Ver detalles</Link>
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

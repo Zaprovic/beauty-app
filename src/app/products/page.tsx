@@ -7,11 +7,11 @@ import { LoaderIcon } from "lucide-react";
 import { SearchProducts } from "./_components/search-products";
 
 export default async function ProductsPage() {
-// {
-//   // searchParams,
-// }: {
-//   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-// },
+  // {
+  //   // searchParams,
+  // }: {
+  //   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  // },
   const categories = await db.select().from(categoriesTable);
   // const params = await searchParams;
 

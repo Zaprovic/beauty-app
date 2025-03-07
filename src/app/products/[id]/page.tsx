@@ -34,7 +34,6 @@ export default async function ProductPage({
   // Fetch the product data server-side
   const { id } = await params;
   const product = await getProductWithCategory(id);
-
   if (!product) {
     return (
       <div className="container mx-auto flex min-h-[60vh] flex-col items-center justify-center px-4 py-16">
