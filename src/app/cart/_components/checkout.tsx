@@ -17,7 +17,7 @@ const Checkout = () => {
     <div className="lg:col-span-1">
       <div className="sticky top-24 rounded-xl bg-white p-6 shadow-md dark:border dark:border-gray-700/50 dark:bg-gray-800/50 dark:backdrop-blur-sm">
         <h2 className="mb-4 text-xl font-bold text-gray-800 dark:text-white">
-          Order Summary
+          Resumen del Pedido
         </h2>
 
         <div className="mb-6 space-y-4">
@@ -25,16 +25,16 @@ const Checkout = () => {
             <span className="text-gray-600 dark:text-gray-300">
               Subtotal (
               {items.reduce((count, item) => count + (item.quantity || 1), 0)}{" "}
-              items)
+              artículos)
             </span>
             <span className="font-medium text-gray-800 dark:text-white">
               {formatCOP(Number(totalPrice))}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-600 dark:text-gray-300">Shipping</span>
+            <span className="text-gray-600 dark:text-gray-300">Envío</span>
             <span className="font-medium text-green-600 dark:text-green-400">
-              Free
+              Gratis
             </span>
           </div>
           <div className="mt-4 border-t border-gray-200 pt-4 dark:border-gray-700/50">
@@ -45,7 +45,7 @@ const Checkout = () => {
               </span>
             </div>
             <p className="mt-1 text-right text-xs text-gray-500 dark:text-gray-400">
-              Tax included
+              Impuestos incluidos
             </p>
           </div>
         </div>
@@ -58,11 +58,11 @@ const Checkout = () => {
           onClick={() => setIsCheckingOut(true)}
         >
           {isCheckingOut ? (
-            "Processing..."
+            "Procesando..."
           ) : (
             <>
               <CreditCardIcon size={18} />
-              Checkout Securely
+              Pagar Seguro
             </>
           )}
         </button>
@@ -73,7 +73,7 @@ const Checkout = () => {
             className="flex items-center justify-center text-gray-600 hover:text-pink-600 dark:text-gray-400 dark:hover:text-pink-400"
           >
             <ShoppingBagIcon size={16} className="mr-2" />
-            Continue Shopping
+            Seguir Comprando
           </Link>
         </div>
       </div>
