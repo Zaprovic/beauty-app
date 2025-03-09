@@ -7,15 +7,6 @@ import CarouselSkeleton from "@/components/skeletons/carousel-skeleton";
 import { Suspense } from "react";
 
 export default function Home() {
-  let sum = 0;
-  const longRunningTask = () => {
-    for (let i = 0; i < 1e9; i++) {
-      sum = sum + i;
-    }
-  };
-
-  longRunningTask();
-
   return (
     <div className="fade-in mx-4 min-h-screen sm:mx-14">
       <HeroSection />

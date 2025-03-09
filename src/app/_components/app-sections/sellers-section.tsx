@@ -1,12 +1,7 @@
 import Link from "next/link";
-import CarouselWrapper from "@/components/providers/carousel-wrapper";
-import { CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import Product from "@/components/product";
-import { getProductsWithCategories } from "@/lib/db";
+import CarouselSellersSection from "./carousel-sellers-section";
 
-const SellersSection = async () => {
-  const products = await getProductsWithCategories();
-
+const SellersSection = () => {
   return (
     <section className="mx-auto border-b py-16">
       <div className="px-4">
@@ -18,18 +13,7 @@ const SellersSection = async () => {
           gusta.
         </p>
 
-        <CarouselWrapper delay={5000}>
-          <CarouselContent className="fade-in -ml-4">
-            {products.map((product) => (
-              <CarouselItem
-                key={product.id}
-                className="pl-4 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
-              >
-                <Product product={product} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </CarouselWrapper>
+        <CarouselSellersSection />
 
         <div className="mt-10 text-center">
           <Link
