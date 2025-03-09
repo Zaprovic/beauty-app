@@ -83,7 +83,12 @@ export function CategoryTabs({
             >
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((product) => (
-                  <Product key={product.id} product={product} />
+                  <Product
+                    key={product.id}
+                    product={product}
+                    inCart={isInCart(product.id)}
+                    toggleItem={toggleItem}
+                  />
                 ))
               ) : (
                 <EmptyState
