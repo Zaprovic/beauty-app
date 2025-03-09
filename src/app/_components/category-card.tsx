@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 // Define rosette color palette arrays for light/dark themes
 const rosettePalettes = {
@@ -44,31 +43,6 @@ interface CategoryCardProps {
 
 export const CategoryCard = ({ category, colorIndex }: CategoryCardProps) => {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Avoid hydration mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    // Return a minimal version during SSR/before hydration
-    return (
-      <Link href={`/categories/${category.id}`} className="group">
-        <div className="relative h-64 overflow-hidden rounded-xl shadow-md">
-          <div className="absolute top-6 left-1/2 flex h-16 w-16 -translate-x-1/2 items-center justify-center rounded-full text-2xl font-bold">
-            {category.name.charAt(0).toUpperCase()}
-          </div>
-          <div className="absolute bottom-12 left-0 w-full text-center">
-            <h3 className="px-4 text-xl font-semibold">{category.name}</h3>
-          </div>
-          <div className="absolute right-0 bottom-0 left-0 overflow-hidden rounded-b-xl py-3 text-center">
-            <span className="text-sm font-medium">Ver productos</span>
-          </div>
-        </div>
-      </Link>
-    );
-  }
 
   const theme = resolvedTheme === "dark" ? "dark" : "light";
   const palette = rosettePalettes[theme];

@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CategoryType, ProductWithCategoryType } from "@/types";
 import { useSearchProductStore } from "@/stores/search-product-store";
 import EmptyState from "./empty-state";
+import { useCartStore } from "@/stores/cart-store";
 
 type CategoryTabsProps = {
   categories: CategoryType[];
@@ -15,6 +16,7 @@ export function CategoryTabs({
   productsWithCategories,
 }: CategoryTabsProps) {
   const { query } = useSearchProductStore();
+  const { isInCart, toggleItem } = useCartStore();
 
   // Filter products based on search query
   const filterProducts = (products: ProductWithCategoryType[]) => {
@@ -53,7 +55,12 @@ export function CategoryTabs({
         >
           {filterProducts(productsWithCategories).length > 0 ? (
             filterProducts(productsWithCategories).map((product) => (
-              <Product key={product.id} product={product} />
+              <Product
+                key={product.id}
+                product={product}
+                inCart={isInCart(product.id)}
+                toggleItem={toggleItem}
+              />
             ))
           ) : (
             <EmptyState message="No se encontraron productos" />

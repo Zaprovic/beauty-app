@@ -1,10 +1,13 @@
+"use client";
 import React from "react";
 import { Button } from "../ui/button";
 import { SearchIcon, ShoppingBagIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "./mode-toggle";
+import { useCartStore } from "@/stores/cart-store";
 
 const NavbarIcons = () => {
+  const { items } = useCartStore();
   return (
     <div className="flex items-center gap-4">
       <Button
@@ -24,9 +27,15 @@ const NavbarIcons = () => {
 
       <Link href="/cart" className="relative" aria-label="Cart" title="Cart">
         <ShoppingBagIcon size={20} />
-        <span className="bg-primary text-primary-foreground absolute bottom-3 left-2.5 flex aspect-square h-auto w-4 items-center justify-center rounded-full text-[0.625rem]">
-          0
-        </span>
+        {items.length > 0 ? (
+          <span className="bg-primary text-primary-foreground absolute bottom-3 left-2.5 flex aspect-square h-auto w-4 items-center justify-center rounded-full text-[0.625rem]">
+            {items.length}
+          </span>
+        ) : (
+          <span className="bg-primary text-primary-foreground absolute bottom-3 left-2.5 flex aspect-square h-auto w-4 items-center justify-center rounded-full text-[0.625rem]">
+            0
+          </span>
+        )}
       </Link>
       <ModeToggle />
     </div>

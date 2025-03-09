@@ -7,7 +7,7 @@ import Navbar from "./navbar";
 
 const Header = () => {
   return (
-    <header className="slide-in-right fixed top-0 right-0 left-0 z-50 w-full border-b px-6 py-4 backdrop-blur-sm transition-all duration-300 sm:px-8">
+    <header className="fixed top-0 right-0 left-0 z-50 w-full border-b px-6 py-4 backdrop-blur-sm transition-all duration-300 sm:px-8">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
         <SidebarToggle />
 

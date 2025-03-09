@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ShoppingCart,
   Heart,
   AlertCircle,
   ArrowUpRightSquare,
@@ -13,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import ModalWrapper from "@/components/providers/modal-wrapper";
 import { getProductsWithCategories, getProductWithCategory } from "@/lib/db";
+import AddToCartBtn from "./_components/add-to-cart-btn";
 
 export async function generateStaticParams() {
   const products = await getProductsWithCategories();
@@ -159,10 +159,7 @@ export default async function ProductModal({
 
           {/* Botones de Acción */}
           <div className="flex flex-col gap-2 sm:flex-row">
-            <Button className="bg-primary hover:bg-primary/90 flex flex-1 items-center justify-center gap-2 py-5">
-              <ShoppingCart size={18} />
-              Añadir al Carrito
-            </Button>
+            <AddToCartBtn product={productWithCategory} />
             <Button
               variant="outline"
               className="border-primary text-primary flex items-center justify-center gap-2"
