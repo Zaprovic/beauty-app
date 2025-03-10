@@ -14,18 +14,12 @@ const HeroSection = () => {
             Productos de cuidado de la piel premium hechos con ingredientes
             orgánicos para un brillo radiante y saludable.
           </p>
-          <div className="flex flex-col justify-center gap-4 md:flex-row lg:justify-start">
+          <div className="flex w-full flex-col justify-center gap-4 md:flex-row">
             <Link
               href="/products"
-              className="rounded-full px-8 py-3 font-medium transition"
-            >
-              Comprar Ahora
-            </Link>
-            <Link
-              href="/collections"
               className="rounded-full border px-8 py-3 font-medium transition"
             >
-              Ver Colecciones
+              Comprar Ahora
             </Link>
           </div>
         </div>

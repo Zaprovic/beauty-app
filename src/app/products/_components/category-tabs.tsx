@@ -5,6 +5,7 @@ import { CategoryType, ProductWithCategoryType } from "@/types";
 import { useSearchProductStore } from "@/stores/search-product-store";
 import EmptyState from "./empty-state";
 import { useCartStore } from "@/stores/cart-store";
+import { useEffect, useState } from "react";
 
 type CategoryTabsProps = {
   categories: CategoryType[];
@@ -17,6 +18,14 @@ export function CategoryTabs({
 }: CategoryTabsProps) {
   const { query } = useSearchProductStore();
   const { isInCart, toggleItem } = useCartStore();
+
+  const [, setProducts] = useState<ProductWithCategoryType[]>(
+    productsWithCategories,
+  );
+
+  useEffect(() => {
+    setProducts(productsWithCategories);
+  }, [productsWithCategories]);
 
   // Filter products based on search query
   const filterProducts = (products: ProductWithCategoryType[]) => {
