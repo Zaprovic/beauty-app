@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useTheme } from "next-themes";
 
+// new comment
+
 // Define rosette color palette arrays for light/dark themes
 const rosettePalettes = {
   light: [
