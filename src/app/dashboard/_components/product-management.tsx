@@ -2,7 +2,6 @@ import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductStatsCards } from "./product-stats";
 import { ProductTable } from "./product-table";
-
 export const ProductManagement = () => {
   // const [products, setProducts] =
   //   useState<ProductWithCategoryType[]>(initialProducts);
@@ -45,10 +44,14 @@ export const ProductManagement = () => {
     <>
       {/* Page header */}
       <div className="mb-4 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-2xl font-bold sm:text-3xl">Product Management</h1>
+        <h1 className="text-2xl font-bold -tracking-wider sm:text-3xl">
+          Dashboard de productos
+        </h1>
         <Button className="w-full sm:w-auto">
           <PlusCircle className="mr-2 h-4 w-4" />
-          <span className="whitespace-nowrap">Add New Product</span>
+          <span className="-tracking-wider whitespace-nowrap">
+            Agregar nuevo producto
+          </span>
         </Button>
       </div>
 

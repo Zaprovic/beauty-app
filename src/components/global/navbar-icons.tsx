@@ -21,7 +21,7 @@ const NavbarIcons = () => {
         <SearchIcon />
       </Button>
 
-      <Link href="/account" aria-label="Account" title="Account">
+      <Link href="/dashboard" aria-label="Account" title="Account">
         <UserIcon size={20} />
       </Link>
 
